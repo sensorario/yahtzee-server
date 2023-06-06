@@ -21,6 +21,7 @@ class TurnsTest extends TestCase
     public function afterEachMoveDecreaseNumberOfAvailableMoves(): void
     {
         $move = $this->getMockBuilder(Move::class)
+            ->disableOriginalConstructor()
             ->getMock();
 
         $turns = new Turns;
@@ -34,6 +35,7 @@ class TurnsTest extends TestCase
         $this->expectException(\RuntimeException::class);
 
         $move = $this->getMockBuilder(Move::class)
+            ->disableOriginalConstructor()
             ->getMock();
         $move->method('getCategory')
             ->willReturnOnConsecutiveCalls(Categories::Fives->value, Categories::Fives->value);
