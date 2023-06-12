@@ -20,4 +20,13 @@ class Turns
 
         $this->moves[$key] = $move;
     }
+
+    public function score()
+    {
+        $score = 0;
+        foreach($this->moves as $move) {
+            $score += $move->score();
+        }
+        return $score;
+    }
 }
