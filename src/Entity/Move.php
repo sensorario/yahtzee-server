@@ -15,6 +15,9 @@ class Move
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    private ?string $game = null;
+
+    #[ORM\Column(length: 255)]
     private ?string $category = null;
 
     #[ORM\Column(type: Types::ARRAY)]
@@ -23,6 +26,18 @@ class Move
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getGame(): ?string
+    {
+        return $this->game;
+    }
+
+    public function setGame(string $game): static
+    {
+        $this->game = $game;
+
+        return $this;
     }
 
     public function getCategory(): ?string
