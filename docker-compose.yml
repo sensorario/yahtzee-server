@@ -1,6 +1,15 @@
 version: '3'
 
 services:
+
+  server:
+    build:
+      context: ./docker/server/
+    volumes:
+      - ./:/var/www/html
+    ports:
+      - "8894:80"
+
 ###> doctrine/doctrine-bundle ###
   database:
     image: postgres:${POSTGRES_VERSION:-15}-alpine

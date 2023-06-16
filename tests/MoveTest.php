@@ -67,4 +67,23 @@ class MoveTest extends WebTestCase
         $this->assertJsonStringEqualsJsonString(json_encode(['score' => 12]), $client->getResponse()->getContent());
         $this->assertResponseIsSuccessful();
     }
+
+    public function testScoreIgnoreOtherGameMoves(): void
+    {
+        $gameId = rand(11111111, 99999999);
+        $secondGameId = rand(11111111, 99999999);
+        $client = static::createClient();
+        $client->request('POST', '/move', [], [], [], json_encode([ 'game_id' => $gameId, 'dices' => [1, 1, 2, 3, 1], 'category' => Categories::Aces->value ]));
+
+        $client->request('GET', '/score' . '/' . $gameId);
+        $this->assertJsonStringEqualsJsonString(json_encode(['score' => 3]), $client->getResponse()->getContent());
+        $this->assertResponseIsSuccessful();
+
+        $client->request('POST', '/move', [], [], [], json_encode([ 'game_id' => $secondGameId, 'dices' => [1, 3, 3, 3, 1], 'category' => Categories::Threes->value]));
+        $this->assertResponseStatusCodeSame(200);
+
+        $client->request('GET', '/score' . '/' . $gameId);
+        $this->assertJsonStringEqualsJsonString(json_encode(['score' => 3]), $client->getResponse()->getContent());
+        $this->assertResponseIsSuccessful();
+    }
 }
