@@ -14,7 +14,7 @@ class MoveTest extends WebTestCase
         $this->assertResponseStatusCodeSame(400);
     }
 
-    public function testMoveRequestSucceedWothCompleteRequest(): void
+    public function testMoveRequestSucceedWithCompleteRequest(): void
     {
         $client = static::createClient();
         $client->request('POST', '/move', [], [], [], json_encode([ 'game_id' => rand(11111111, 99999999), 'dices' => [1, 1, 2, 3, 1], 'category' => Categories::Aces->value ]));
@@ -42,6 +42,7 @@ class MoveTest extends WebTestCase
         $this->assertJsonStringEqualsJsonString(json_encode(['score' => 3]), $client->getResponse()->getContent());
         $this->assertResponseIsSuccessful();
     }
+
     public function testCantChoseSameCategoryTwice(): void
     {
         $gameId = rand(11111111, 99999999);
@@ -50,6 +51,7 @@ class MoveTest extends WebTestCase
         $client->request('POST', '/move', [], [], [], json_encode([ 'game_id' => $gameId, 'dices' => [1, 1, 2, 3, 1], 'category' => Categories::Aces->value ]));
         $this->assertResponseStatusCodeSame(400);
     }
+
     public function testTwoMovesIncremntScore(): void
     {
         $gameId = rand(11111111, 99999999);
