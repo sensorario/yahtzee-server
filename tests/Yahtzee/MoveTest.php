@@ -4,7 +4,6 @@ namespace App\Tests\Yahtzee;
 
 use App\Yahtzee\Categories;
 use App\Yahtzee\Move;
-use App\Yahtzee\Score;
 use PHPUnit\Framework\TestCase;
 
 class MoveTest extends TestCase
